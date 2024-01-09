@@ -23,6 +23,7 @@ import play.api.libs.json._
 class ASCIIArtConverterTests extends FlatSpec with Matchers {
 
 //  val configJson: JsValue = Json.parse(Source.fromFile("/home/karel/FEL/ZKS/asciiart/src/test/scala/combinations/testConfig.json").mkString)
+  val basePath = "src/test/scala/combinations/"
 
 
   def parseCSV(filePath: String): List[(String, String, String, String)] = {
@@ -38,8 +39,10 @@ class ASCIIArtConverterTests extends FlatSpec with Matchers {
 
 
 //  val testConfigs = parseCSV("/home/karel/FEL/ZKS/AsciiArt-output.csv")
-  val testConfigs2Way = parseCSV("/home/karel/FEL/ZKS/AsciiArt-output-2-way.csv")
-  val testConfigs3Way = parseCSV("/home/karel/FEL/ZKS/AsciiArt-output-3-way.csv")
+//  val testConfigs2Way = parseCSV("/home/karel/FEL/ZKS/AsciiArt-output-2-way.csv")
+//  val testConfigs3Way = parseCSV("/home/karel/FEL/ZKS/AsciiArt-output-3-way.csv")
+  val testConfigs2Way = parseCSV(basePath + "AsciiArt-output-2-way.csv")
+  val testConfigs3Way = parseCSV(basePath + "AsciiArt-output-3-way.csv")
 
 
   testConfigs2Way.foreach { case (importerName, filterName, exporterName, rgbExporterName) =>

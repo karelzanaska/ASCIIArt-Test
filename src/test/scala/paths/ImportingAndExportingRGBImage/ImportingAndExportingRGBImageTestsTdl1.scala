@@ -13,6 +13,8 @@ import java.nio.file.{Files, Paths}
 class ImportingAndExportingRGBImageTestsTdl1 extends FunSuite {
   // TDL=1
 
+  val baseSamplePath = "samples/"
+  val baseOutputPath = baseSamplePath + "artifacts/"
 
   test("TDL=1; path: 4") {
 
@@ -73,7 +75,7 @@ class ImportingAndExportingRGBImageTestsTdl1 extends FunSuite {
 
   test("TDL=1; path: 1 - 3 - 9 - 15 - 17") {
     val controller = new ConsoleController()
-    val outputPath = Paths.get("/home/karel/FEL/ZKS/asciiart/samples/artifacts/output.bmp")
+    val outputPath = Paths.get(baseOutputPath + "output.bmp")
     val args = List("--image-random", "--output-rgb-file", outputPath.toString)
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
@@ -85,7 +87,8 @@ class ImportingAndExportingRGBImageTestsTdl1 extends FunSuite {
 
   test("TDL=1; path: 1 - 3 - 10 - 16 - 17") {
     val controller = new ConsoleController()
-    val outputPath = Paths.get("/home/karel/FEL/ZKS/asciiart/samples/artifacts/output.bmp")
+//    val outputPath = Paths.get("/home/karel/FEL/ZKS/asciiart/samples/artifacts/output.bmp")
+    val outputPath = Paths.get(baseOutputPath + "output.bmp")
     val args = List("--image-random-gradient", "--output-rgb-file", outputPath.toString)
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
@@ -97,8 +100,10 @@ class ImportingAndExportingRGBImageTestsTdl1 extends FunSuite {
 
   test("TDL=1; path: 1 - 2 - 5 - 21 - 17") {
     val controller = new ConsoleController()
-    val outputPath = Paths.get("/home/karel/FEL/ZKS/asciiart/samples/artifacts/output.bmp")
-    val args = List("--image", "/home/karel/FEL/ZKS/asciiart/samples/cloud.png", "--output-rgb-file", outputPath.toString)
+//    val outputPath = Paths.get("/home/karel/FEL/ZKS/asciiart/samples/artifacts/output.bmp")
+    val outputPath = Paths.get(baseOutputPath + "output.bmp")
+    val inputPath = Paths.get(baseSamplePath + "cloud.png")
+    val args = List("--image", inputPath.toString, "--output-rgb-file", outputPath.toString)
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
 
@@ -109,8 +114,10 @@ class ImportingAndExportingRGBImageTestsTdl1 extends FunSuite {
 
   test("TDL=1; path: 1 - 2 - 6 - 22 - 17") {
     val controller = new ConsoleController()
-    val outputPath = Paths.get("/home/karel/FEL/ZKS/asciiart/samples/artifacts/output.bmp")
-    val args = List("--image", "/home/karel/FEL/ZKS/asciiart/samples/cloud.jpg", "--output-rgb-file", outputPath.toString)
+//    val outputPath = Paths.get("/home/karel/FEL/ZKS/asciiart/samples/artifacts/output.bmp")
+  val outputPath = Paths.get(baseOutputPath + "output.bmp")
+    val inputPath = Paths.get(baseSamplePath + "cloud.jpg")
+    val args = List("--image", inputPath.toString, "--output-rgb-file", outputPath.toString)
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
 
@@ -121,8 +128,10 @@ class ImportingAndExportingRGBImageTestsTdl1 extends FunSuite {
 
   test("TDL=1; path: 1 - 2 - 7 - 23 - 17") {
     val controller = new ConsoleController()
-    val outputPath = Paths.get("/home/karel/FEL/ZKS/asciiart/samples/artifacts/output.bmp")
-    val args = List("--image", "/home/karel/FEL/ZKS/asciiart/samples/cloud.gif", "--output-rgb-file", outputPath.toString)
+//    val outputPath = Paths.get("/home/karel/FEL/ZKS/asciiart/samples/artifacts/output.bmp")
+    val outputPath = Paths.get(baseOutputPath + "output.bmp")
+    val inputPath = Paths.get(baseSamplePath + "cloud.gif")
+    val args = List("--image", inputPath.toString, "--output-rgb-file", outputPath.toString)
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
 
@@ -133,8 +142,10 @@ class ImportingAndExportingRGBImageTestsTdl1 extends FunSuite {
 
   test("TDL=1; path: 1 - 2 - 8 - 24 - 17") {
     val controller = new ConsoleController()
-    val outputPath = Paths.get("/home/karel/FEL/ZKS/asciiart/samples/artifacts/output.bmp")
-    val args = List("--image", "/home/karel/FEL/ZKS/asciiart/samples/cloud.bmp", "--output-rgb-file", outputPath.toString)
+//    val outputPath = Paths.get("/home/karel/FEL/ZKS/asciiart/samples/artifacts/output.bmp")
+    val outputPath = Paths.get(baseOutputPath + "output.bmp")
+    val inputPath = Paths.get(baseSamplePath + "cloud.bmp")
+    val args = List("--image", inputPath.toString, "--output-rgb-file", outputPath.toString)
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
 
@@ -145,8 +156,10 @@ class ImportingAndExportingRGBImageTestsTdl1 extends FunSuite {
 
   test("TDL=1; path: 1 - 2 - 5 - 21 - 18") {
     val controller = new ConsoleController()
-    val outputPath = Paths.get("/home/karel/FEL/ZKS/asciiart/samples/artifacts/output.jpg")
-    val args = List("--image", "/home/karel/FEL/ZKS/asciiart/samples/cloud.png", "--output-rgb-file", outputPath.toString)
+//    val outputPath = Paths.get("/home/karel/FEL/ZKS/asciiart/samples/artifacts/output.jpg")
+    val outputPath = Paths.get(baseOutputPath + "output.jpg")
+    val inputPath = Paths.get(baseSamplePath + "cloud.png")
+    val args = List("--image", inputPath.toString, "--output-rgb-file", outputPath.toString)
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
 
@@ -157,8 +170,10 @@ class ImportingAndExportingRGBImageTestsTdl1 extends FunSuite {
 
   test("TDL=1; path: 1 - 2 - 5 - 21 - 19") {
     val controller = new ConsoleController()
-    val outputPath = Paths.get("/home/karel/FEL/ZKS/asciiart/samples/artifacts/output.png")
-    val args = List("--image", "/home/karel/FEL/ZKS/asciiart/samples/cloud.png", "--output-rgb-file", outputPath.toString)
+//    val outputPath = Paths.get("/home/karel/FEL/ZKS/asciiart/samples/artifacts/output.png")
+    val outputPath = Paths.get(baseOutputPath + "output.png")
+    val inputPath = Paths.get(baseSamplePath + "cloud.png")
+    val args = List("--image", inputPath.toString, "--output-rgb-file", outputPath.toString)
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
 
@@ -169,8 +184,10 @@ class ImportingAndExportingRGBImageTestsTdl1 extends FunSuite {
 
   test("TDL=1; path: 1 - 2 - 5 - 21 - 20") {
     val controller = new ConsoleController()
-    val outputPath = Paths.get("/home/karel/FEL/ZKS/asciiart/samples/artifacts/output.gif")
-    val args = List("--image", "/home/karel/FEL/ZKS/asciiart/samples/cloud.png", "--output-rgb-file", outputPath.toString)
+//    val outputPath = Paths.get("/home/karel/FEL/ZKS/asciiart/samples/artifacts/output.gif")
+    val outputPath = Paths.get(baseOutputPath + "output.gif")
+    val inputPath = Paths.get(baseSamplePath + "cloud.png")
+    val args = List("--image", inputPath.toString, "--output-rgb-file", outputPath.toString)
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
 
