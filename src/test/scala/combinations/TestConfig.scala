@@ -11,9 +11,9 @@ case class NullValue() extends ConfigValue
 
 //val base= "samples/"
 //val basePath = "sam"
-val baseSamplePath = "samples/"
 
 object TestConfig {
+  val baseSamplePath = "samples/"
   val importers: Map[String, ConfigValue] = Map(
     "asciiart.image.importers.JPGImageImporter" -> StringValue("/home/karel/FEL/ZKS/asciiart/samples/cloud.jpg"),
     "asciiart.image.importers.JPGImageImporter" -> StringValue(baseSamplePath + "cloud.jpg"),
