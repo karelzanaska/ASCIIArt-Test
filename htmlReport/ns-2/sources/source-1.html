@@ -1,0 +1,174 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ConsoleController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">asciiart.controllers</a>
+</div>
+
+<h1>Coverage Summary for Class: ConsoleController (asciiart.controllers)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ConsoleController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (12/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (29/29)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package asciiart.controllers
+&nbsp;
+&nbsp;import asciiart.image.convertors.image.ImageConverter
+&nbsp;import asciiart.image.exporters.ImageExporter
+&nbsp;import asciiart.image.filters.ImageFilter
+&nbsp;import asciiart.image.importers.ImageImporter
+&nbsp;import asciiart.image.models.image.{AsciiImage, Image, RGBImage}
+&nbsp;
+&nbsp;import scala.Console.err
+&nbsp;
+<b class="fc">&nbsp;class ConsoleController() extends Controller[RGBImage, AsciiImage] {</b>
+<b class="fc">&nbsp;  private var lastErrorMessage = &quot;&quot;</b>
+<b class="fc">&nbsp;  private var message = &quot;&quot;</b>
+&nbsp;
+&nbsp;  def getLastErrorMessage(): String = {
+<b class="fc">&nbsp;    return lastErrorMessage</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  def getLastMessage(): String = {
+<b class="fc">&nbsp;    return message</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  override def showHelp(): Unit = {
+<b class="fc">&nbsp;    val output = &quot;Usage: run [options]\n\nOptions:\n--image &lt;image_path&gt; Path to the image file to be processed. Supported image formats are JPG and PNG.\n--image-random Generate a random image.\n--output-file &lt;output_path&gt; Path to the output file. The output file must be a TXT file.\n--output-console Print ascii image to standard output.\n--rotate &lt;degrees&gt; Rotate the image by the specified angle. The angle must be a valid number divisible by 90.\n--scale &lt;factor&gt; Scale the image by the specified factor. Supported factors are 0.25, 1, 4.\n--flip &lt;direction&gt; Flip the image horizontally (x) or vertically (y).\n--invert Invert the image.\n--table &lt;table_type&gt; Convert the image to ASCII art using the specified table. Supported table types are &#39;paulbourke&#39; and &#39;nonlinear&#39;. Default is &#39;paulbourke&#39;.\n--custom-table &lt;table_path&gt; Convert the image to ASCII art using the specified custom table.\n\nExample:\nprogram --image test.jpg --rotate 90 --output-file test.txt\nprogram --image-random --scale 0.25 --flip y --table paulbourke\nprogram --custom-table 1{}[]?-_+~&lt;&gt;i!lI;:, --output-console test.txt&quot;</b>
+&nbsp;
+<b class="fc">&nbsp;    print(output)</b>
+<b class="fc">&nbsp;    message = output</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  override def showErrorMessage(message: String): Unit = {
+<b class="fc">&nbsp;    err.println(message)</b>
+<b class="fc">&nbsp;    lastErrorMessage = message</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  override def importImage(imageImporter: ImageImporter[RGBImage]): Option[RGBImage] = {
+<b class="fc">&nbsp;    imageImporter.importImage() match {</b>
+<b class="fc">&nbsp;      case Left(message) =&gt;</b>
+<b class="fc">&nbsp;        showErrorMessage(message)</b>
+<b class="fc">&nbsp;        None</b>
+<b class="fc">&nbsp;      case Right(image) =&gt; Some(image)</b>
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+&nbsp;  override def applyFilter(image: RGBImage, filter: ImageFilter[RGBImage]): Option[RGBImage] = {
+<b class="fc">&nbsp;    filter.apply(image) match {</b>
+<b class="fc">&nbsp;      case Left(message) =&gt;</b>
+<b class="fc">&nbsp;        showErrorMessage(message)</b>
+<b class="fc">&nbsp;        None</b>
+<b class="fc">&nbsp;      case Right(image) =&gt; Some(image)</b>
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+&nbsp;  override def exportImage(image: AsciiImage, imageExporter: ImageExporter[AsciiImage]): Unit = {
+<b class="fc">&nbsp;    imageExporter.exportImage(image) match {</b>
+<b class="fc">&nbsp;      case Left(message) =&gt; showErrorMessage(message)</b>
+<b class="fc">&nbsp;      case Right(_) =&gt;</b>
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+<b class="fc">&nbsp;  override def applyConvertor(image: RGBImage, imageConvertor: ImageConverter[RGBImage, AsciiImage]): Option[AsciiImage] = {</b>
+<b class="fc">&nbsp;    imageConvertor.convert(image).fold(</b>
+<b class="fc">&nbsp;        message =&gt; {</b>
+<b class="fc">&nbsp;            showErrorMessage(message)</b>
+<b class="fc">&nbsp;            return None</b>
+&nbsp;        },
+<b class="fc">&nbsp;        image =&gt; return Some(image)</b>
+&nbsp;    )
+&nbsp;  }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-01-10 16:49</div>
+</div>
+</body>
+</html>

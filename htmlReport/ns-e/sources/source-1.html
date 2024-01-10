@@ -1,0 +1,312 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ConsoleParser</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">asciiart.ui</a>
+</div>
+
+<h1>Coverage Summary for Class: ConsoleParser (asciiart.ui)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ConsoleParser</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (24/24)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    95.9%
+  </span>
+  <span class="absValue">
+    (140/146)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package asciiart.ui
+&nbsp;
+&nbsp;import asciiart.image.convertors.image.{GrayscaleToAsciiImageConverter, ImageConverter, PatternBasedAsciiImageConverter}
+&nbsp;import asciiart.image.convertors.pixel.{LinearGrayscaleToAsciiPixelConvertor, NonLinearGrayscaleToAsciiPixelConvertor, PaulBourkeGrayscaleToAsciiPixelConvertor}
+&nbsp;import asciiart.image.exporters.{BMPImageExporter, GIFImageExporter, ImageExporter, JPGImageExporter, PNGImageExporter, StdoutImageExporter, TxtImageExporter}
+&nbsp;import asciiart.image.filters.ImageFilter
+&nbsp;import asciiart.image.filters.flip.FlipImageFilter
+&nbsp;import asciiart.image.filters.invert.InvertImageFilter
+&nbsp;import asciiart.image.filters.rotate.RotateImageFilter
+&nbsp;import asciiart.image.filters.scale.ScaleImageFilter
+&nbsp;import asciiart.image.importers.{FileSystemImageImporter, GradientRandomImageGeneratorImporter, ImageImporter, JPGImageImporter, RandomImageGeneratorImporter}
+&nbsp;import asciiart.image.models.image.{AsciiImage, RGBImage}
+&nbsp;
+&nbsp;import scala.Right
+&nbsp;import scala.collection.mutable.ListBuffer
+&nbsp;
+<b class="fc">&nbsp;class ConsoleParser(private val args: List[String]) {</b>
+&nbsp;
+<b class="fc">&nbsp;  private val parsedArgs: List[(String, Option[String])] = parseArguments(args)</b>
+&nbsp;
+&nbsp;  private def parseArguments(args: List[String]): List[(String, Option[String])] = {
+<b class="fc">&nbsp;    var parameter = &quot;&quot;</b>
+<b class="fc">&nbsp;    val arguments = new ListBuffer[(String, Option[String])]()</b>
+&nbsp;
+<b class="fc">&nbsp;    args.foreach(command =&gt; {</b>
+<b class="fc">&nbsp;      if (command.startsWith(&quot;--&quot;)) {</b>
+<b class="fc">&nbsp;        if (parameter.nonEmpty) {</b>
+<b class="fc">&nbsp;          arguments += ((parameter, None))</b>
+<b class="fc">&nbsp;          parameter = &quot;&quot;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        parameter = command.substring(2)</b>
+&nbsp;      }
+&nbsp;      else {
+<b class="fc">&nbsp;        if (parameter.nonEmpty) {</b>
+<b class="fc">&nbsp;          arguments += ((parameter, Some(command)))</b>
+<b class="fc">&nbsp;          parameter = &quot;&quot;</b>
+&nbsp;        }
+&nbsp;      }
+&nbsp;    })
+<b class="fc">&nbsp;    if (parameter.nonEmpty) {</b>
+<b class="fc">&nbsp;      arguments += ((parameter, None))</b>
+&nbsp;    }
+<b class="fc">&nbsp;    arguments.toList</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  def isHelp(): Boolean = {
+<b class="fc">&nbsp;    parsedArgs.exists(arg =&gt; arg._1 == &quot;help&quot; || arg._1 == &quot;h&quot;)</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  def getImageImporter(): Either[String, ImageImporter[RGBImage]] = {
+<b class="fc">&nbsp;    val imageCommand = parseImageCommand()</b>
+<b class="fc">&nbsp;    imageCommand fold(</b>
+<b class="fc">&nbsp;      error =&gt; Left(error),</b>
+<b class="fc">&nbsp;      command =&gt;</b>
+<b class="fc">&nbsp;        command._1 match {</b>
+<b class="fc">&nbsp;          case &quot;image&quot; =&gt;</b>
+<b class="fc">&nbsp;            command._2 match {</b>
+<b class="fc">&nbsp;              case Some(path) if path.endsWith(&quot;.jpg&quot;) =&gt; Right(JPGImageImporter(path))</b>
+<b class="fc">&nbsp;              case Some(path) if path.endsWith(&quot;.png&quot;) =&gt; Right(JPGImageImporter(path))</b>
+<b class="fc">&nbsp;              case Some(path) if path.endsWith(&quot;.gif&quot;) =&gt; Right(JPGImageImporter(path))</b>
+<b class="fc">&nbsp;              case Some(path) if path.endsWith(&quot;.bmp&quot;) =&gt; Right(JPGImageImporter(path))</b>
+<b class="fc">&nbsp;              case Some(_) =&gt; Left(&quot;Unsupported image format. Please use JPG or PNG or GIF or BMP file.&quot;)</b>
+<b class="fc">&nbsp;              case None =&gt; Left(&quot;No image path specified.&quot;)</b>
+<b class="fc">&nbsp;            }</b>
+<b class="fc">&nbsp;          case &quot;image-random&quot; =&gt; Right(RandomImageGeneratorImporter())</b>
+<b class="fc">&nbsp;          case &quot;image-random-gradient&quot; =&gt; Right(GradientRandomImageGeneratorImporter())</b>
+<b class="nc">&nbsp;          case _ =&gt; Left(&quot;Invalid image command.&quot;)</b>
+&nbsp;        }
+<b class="fc">&nbsp;    )</b>
+<b class="fc">&nbsp;  }</b>
+<b class="nc">&nbsp;</b>
+&nbsp;  def getAsciiImageExporters(): Either[String, List[ImageExporter[AsciiImage]]] = {
+&nbsp;//    val imageExporters = new ListBuffer[ImageExporter[AsciiImage]]()
+<b class="fc">&nbsp;    val imageExporters = new ListBuffer[ImageExporter[AsciiImage]]()</b>
+&nbsp;
+<b class="fc">&nbsp;    val outputConsole = parsedArgs.find(_._1 == &quot;output-console&quot;)</b>
+<b class="fc">&nbsp;    if (outputConsole.isDefined) {</b>
+<b class="fc">&nbsp;        imageExporters += StdoutImageExporter()</b>
+&nbsp;    }
+<b class="fc">&nbsp;</b>
+<b class="fc">&nbsp;    val outputFile = parsedArgs.find(_._1 == &quot;output-file&quot;)</b>
+<b class="fc">&nbsp;    if (outputFile.isDefined) {</b>
+<b class="fc">&nbsp;      val path = outputFile.get._2.get</b>
+<b class="fc">&nbsp;      if (path.endsWith(&quot;.txt&quot;)) {</b>
+<b class="fc">&nbsp;        imageExporters += TxtImageExporter(path)</b>
+<b class="fc">&nbsp;      }</b>
+<b class="fc">&nbsp;      else {</b>
+<b class="fc">&nbsp;        return Left(&quot;Unsupported output file format. Please use TXT file.&quot;)</b>
+<b class="fc">&nbsp;      }</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    Right(imageExporters.toList)</b>
+&nbsp;  }
+&nbsp;
+<b class="fc">&nbsp;  def getRGBImageExporters(): Either[String, List[ImageExporter[RGBImage]]] = {</b>
+<b class="fc">&nbsp;    val imageExporters = new ListBuffer[ImageExporter[RGBImage]]()</b>
+&nbsp;
+<b class="fc">&nbsp;    parsedArgs.foreach(arg =&gt; {</b>
+<b class="fc">&nbsp;      arg._1 match {</b>
+<b class="fc">&nbsp;        case &quot;output-rgb-file&quot; =&gt;</b>
+<b class="fc">&nbsp;          val path = arg._2.get</b>
+<b class="fc">&nbsp;          if (path.endsWith(&quot;.jpg&quot;)) {</b>
+<b class="fc">&nbsp;            imageExporters += JPGImageExporter(path)</b>
+<b class="fc">&nbsp;          }</b>
+<b class="fc">&nbsp;          else if (path.endsWith(&quot;.png&quot;)) {</b>
+<b class="fc">&nbsp;            imageExporters += PNGImageExporter(path)</b>
+<b class="fc">&nbsp;          }</b>
+<b class="fc">&nbsp;          else if (path.endsWith(&quot;.gif&quot;)) {</b>
+<b class="fc">&nbsp;            imageExporters += GIFImageExporter(path)</b>
+<b class="fc">&nbsp;          }</b>
+<b class="fc">&nbsp;          else if (path.endsWith(&quot;.bmp&quot;)) {</b>
+<b class="fc">&nbsp;            imageExporters += BMPImageExporter(path)</b>
+<b class="fc">&nbsp;          }</b>
+&nbsp;          else {
+<b class="fc">&nbsp;            return Left(&quot;Unsupported output file format. Please use JPG or PNG or GIF or BMP file.&quot;)</b>
+<b class="fc">&nbsp;          }</b>
+<b class="fc">&nbsp;        case _ =&gt; Left(&quot;Invalid rgb image command.&quot;)</b>
+&nbsp;      }
+<b class="nc">&nbsp;    })</b>
+&nbsp;
+<b class="fc">&nbsp;    Right(imageExporters.toList)</b>
+&nbsp;  }
+&nbsp;
+<b class="fc">&nbsp;  def getImageFilters(): Either[String, List[ImageFilter[RGBImage]]] = {</b>
+<b class="fc">&nbsp;    val filters = new ListBuffer[ImageFilter[RGBImage]]()</b>
+<b class="fc">&nbsp;    parsedArgs.foreach(arg =&gt; {</b>
+<b class="fc">&nbsp;      arg._1 match {</b>
+<b class="fc">&nbsp;        case &quot;invert&quot; =&gt; filters += InvertImageFilter()</b>
+<b class="fc">&nbsp;        case &quot;rotate&quot; =&gt;</b>
+<b class="fc">&nbsp;          parseRotateFilter(arg._2.get).fold(</b>
+<b class="fc">&nbsp;            error =&gt; return Left(error),</b>
+<b class="fc">&nbsp;            degrees =&gt; {filters += RotateImageFilter(degrees)}</b>
+<b class="fc">&nbsp;          )</b>
+<b class="fc">&nbsp;        case &quot;scale&quot; =&gt;</b>
+<b class="fc">&nbsp;            parseScaleFilter(arg._2.get).fold(</b>
+<b class="fc">&nbsp;                error =&gt; return Left(error),</b>
+<b class="fc">&nbsp;                scale =&gt; {filters += ScaleImageFilter(scale)}</b>
+<b class="fc">&nbsp;            )</b>
+<b class="fc">&nbsp;        case &quot;flip&quot; =&gt;</b>
+<b class="fc">&nbsp;          parseFlipFilter(arg._2.get).fold(</b>
+<b class="fc">&nbsp;            error =&gt; return Left(error),</b>
+<b class="fc">&nbsp;            flip =&gt; {filters += FlipImageFilter(flip)}</b>
+<b class="fc">&nbsp;          )</b>
+<b class="fc">&nbsp;        case _ =&gt;</b>
+<b class="fc">&nbsp;      }</b>
+<b class="fc">&nbsp;    })</b>
+<b class="fc">&nbsp;    Right(filters.toList)</b>
+<b class="fc">&nbsp;  }</b>
+&nbsp;
+&nbsp;  def getAsciiImageConvertor(): Either[String, ImageConverter[RGBImage, AsciiImage]] = {
+<b class="fc">&nbsp;    val tableConvertor = parsedArgs.find(_._1 == &quot;table&quot;)</b>
+<b class="fc">&nbsp;    if (tableConvertor.isDefined) {</b>
+<b class="fc">&nbsp;      val convertor: Either[String, ImageConverter[RGBImage, AsciiImage]] = tableConvertor.get._2.get match {</b>
+<b class="fc">&nbsp;        case &quot;paulbourke&quot; =&gt; Right(GrayscaleToAsciiImageConverter(new PaulBourkeGrayscaleToAsciiPixelConvertor))</b>
+<b class="fc">&nbsp;        case &quot;nonlinear&quot; =&gt; Right(GrayscaleToAsciiImageConverter(new NonLinearGrayscaleToAsciiPixelConvertor))</b>
+<b class="fc">&nbsp;        case &quot;patternbased&quot; =&gt; Right(PatternBasedAsciiImageConverter())</b>
+<b class="fc">&nbsp;        case _ =&gt; Left(&quot;Invalid argument for table. Please use paulbourke or nonlinear.&quot;)</b>
+<b class="nc">&nbsp;      }</b>
+<b class="fc">&nbsp;      return convertor</b>
+<b class="nc">&nbsp;    }</b>
+<b class="fc">&nbsp;</b>
+<b class="fc">&nbsp;    val manuallySetConvertor = parsedArgs.find(_._1 == &quot;custom-table&quot;)</b>
+<b class="fc">&nbsp;    if (manuallySetConvertor.isDefined) {</b>
+<b class="fc">&nbsp;      val convertor = manuallySetConvertor.get._2 match {</b>
+<b class="fc">&nbsp;        case Some(value) =&gt;</b>
+<b class="fc">&nbsp;          val convertor = GrayscaleToAsciiImageConverter(new LinearGrayscaleToAsciiPixelConvertor(value))</b>
+<b class="fc">&nbsp;          Right(convertor)</b>
+<b class="fc">&nbsp;        case None =&gt; Left(&quot;Invalid argument for custom-table.&quot;)</b>
+<b class="fc">&nbsp;      }</b>
+<b class="fc">&nbsp;      return convertor</b>
+<b class="nc">&nbsp;    }</b>
+<b class="fc">&nbsp;</b>
+&nbsp;    // no table specified, use default
+<b class="fc">&nbsp;    Right(GrayscaleToAsciiImageConverter(new PaulBourkeGrayscaleToAsciiPixelConvertor))</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  private def parseRotateFilter(degrees: String): Either[String, Int] = {
+<b class="fc">&nbsp;    try {</b>
+<b class="fc">&nbsp;      if (degrees.startsWith(&quot;+&quot;)) Right(degrees.substring(1).toInt)</b>
+<b class="fc">&nbsp;      else if (degrees.startsWith(&quot;-&quot;)) Right(-degrees.substring(1).toInt)</b>
+<b class="fc">&nbsp;      else Right(degrees.toInt)</b>
+&nbsp;    } catch {
+<b class="fc">&nbsp;      case _: NumberFormatException =&gt; Left(&quot;Invalid argument for rotate.&quot;)</b>
+<b class="fc">&nbsp;    }</b>
+<b class="fc">&nbsp;  }</b>
+&nbsp;
+<b class="fc">&nbsp;  private def parseScaleFilter(scale: String): Either[String, Float] = {</b>
+&nbsp;    try {
+<b class="fc">&nbsp;      Right(scale.toFloat)</b>
+&nbsp;    } catch {
+<b class="fc">&nbsp;      case _: NumberFormatException =&gt; Left(&quot;Invalid argument for scale.&quot;)</b>
+&nbsp;    }
+<b class="fc">&nbsp;  }</b>
+&nbsp;
+<b class="fc">&nbsp;  private def parseFlipFilter(flip: String): Either[String, Char] = {</b>
+<b class="fc">&nbsp;    if (flip == &quot;x&quot; || flip == &quot;y&quot;) Right(flip.head)</b>
+<b class="fc">&nbsp;    else Left(&quot;Invalid argument for flip.&quot;)</b>
+&nbsp;  }
+&nbsp;
+<b class="fc">&nbsp;  private def parseImageCommand(): Either[String, (String, Option[String])] = {</b>
+<b class="fc">&nbsp;    val imageCommands: Seq[(String, Option[String])] = parsedArgs.filter(arg =&gt; arg._1 == &quot;image&quot; || arg._1 == &quot;image-random&quot; || arg._1 == &quot;image-random-gradient&quot;)</b>
+&nbsp;
+<b class="fc">&nbsp;    if (imageCommands.isEmpty) Left(&quot;No image command specified&quot;)</b>
+<b class="fc">&nbsp;    else if (imageCommands.length &gt; 1) Left(&quot;Multiple image commands specified. Please specify only one image command.&quot;)</b>
+<b class="fc">&nbsp;    else Right(imageCommands.head)</b>
+&nbsp;  }
+<b class="fc">&nbsp;</b>
+<b class="fc">&nbsp;}</b>
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-01-10 16:49</div>
+</div>
+</body>
+</html>

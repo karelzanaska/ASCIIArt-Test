@@ -1,7 +1,9 @@
 package asciiart.ui
 
+import asciiart.image.convertors.image.{GrayscaleToAsciiImageConverter, PatternBasedAsciiImageConverter}
+import asciiart.image.convertors.pixel.{NonLinearGrayscaleToAsciiPixelConvertor, PaulBourkeGrayscaleToAsciiPixelConvertor}
 import asciiart.image.exporters.{StdoutImageExporter, TxtImageExporter}
-import asciiart.image.importers.{FileSystemImageImporter, RandomImageGeneratorImporter}
+import asciiart.image.importers.{FileSystemImageImporter, JPGImageImporter, RandomImageGeneratorImporter}
 import org.scalatest.FunSuite
 
 class ConsoleParserTest extends FunSuite {
@@ -24,18 +26,29 @@ class ConsoleParserTest extends FunSuite {
     assert(!result)
   }
 
-  // TODO: change to JPGImageImporter, PNGImageImporter, GIFImageImporter, BMPImageImporter
-//  test("getImageImporter should return FileSystemImageImporter for valid JPG image path") {
-//    val parser = new ConsoleParser(List("--image", "test.jpg"))
-//    val expected = Right(FileSystemImageImporter("test.jpg"))
-//    assert(parser.getImageImporter() == expected)
-//  }
-//
-//  test("getImageImporter should return FileSystemImageImporter for valid PNG image path") {
-//    val parser = new ConsoleParser(List("--image", "test.png"))
-//    val expected = Right(FileSystemImageImporter("test.png"))
-//    assert(parser.getImageImporter() == expected)
-//  }
+  test("getImageImporter should return JPGImageImporter for valid JPG image path") {
+    val parser = new ConsoleParser(List("--image", "test.jpg"))
+    val expected = Right(JPGImageImporter("test.jpg"))
+    assert(parser.getImageImporter() == expected)
+  }
+
+  test("getImageImporter should return PNGImageImporter for valid PNG image path") {
+    val parser = new ConsoleParser(List("--image", "test.png"))
+    val expected = Right(JPGImageImporter("test.png"))
+    assert(parser.getImageImporter() == expected)
+  }
+
+  test("getImageImporter should return GIFImageImporter for valid GIF image path") {
+    val parser = new ConsoleParser(List("--image", "test.gif"))
+    val expected = Right(JPGImageImporter("test.gif"))
+    assert(parser.getImageImporter() == expected)
+  }
+
+  test("getImageImporter should return BMPImageImporter for valid BMP image path") {
+    val parser = new ConsoleParser(List("--image", "test.bmp"))
+    val expected = Right(JPGImageImporter("test.bmp"))
+    assert(parser.getImageImporter() == expected)
+  }
 
   test("getImageImporter should return RandomImageGeneratorImporter for image-random command") {
     val parser = new ConsoleParser(List("--image-random"))
@@ -99,6 +112,30 @@ class ConsoleParserTest extends FunSuite {
   test("ConsoleParser should return Invalid argument for custom-table error when custom table convertor argument is not valid") {
     val consoleParser = new ConsoleParser(List("--custom-table"))
     assert(consoleParser.getAsciiImageConvertor() == Left("Invalid argument for custom-table."))
+  }
+
+  test("getImageImporter should return error when no image path is specified") {
+    val parser = new ConsoleParser(List("--image"))
+    val expected = Left("No image path specified.")
+    assert(parser.getImageImporter() == expected)
+  }
+
+  test("getAsciiImageConvertor should return PaulBourkeGrayscaleToAsciiPixelConvertor for paulbourke command") {
+    val parser = new ConsoleParser(List("--table", "paulbourke"))
+    val expected = Right(GrayscaleToAsciiImageConverter(new PaulBourkeGrayscaleToAsciiPixelConvertor))
+    assert(parser.getAsciiImageConvertor() == expected)
+  }
+
+  test("getAsciiImageConvertor should return NonLinearGrayscaleToAsciiPixelConvertor for nonlinear command") {
+    val parser = new ConsoleParser(List("--table", "nonlinear"))
+    val expected = Right(GrayscaleToAsciiImageConverter(new NonLinearGrayscaleToAsciiPixelConvertor))
+    assert(parser.getAsciiImageConvertor() == expected)
+  }
+
+  test("getAsciiImageConvertor should return PatternBasedAsciiImageConverter for patternbased command") {
+    val parser = new ConsoleParser(List("--table", "patternbased"))
+    val expected = Right(PatternBasedAsciiImageConverter())
+    assert(parser.getAsciiImageConvertor() == expected)
   }
 
 }

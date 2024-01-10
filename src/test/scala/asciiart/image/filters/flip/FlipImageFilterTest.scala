@@ -36,7 +36,6 @@ class FlipImageFilterTest extends FunSuite {
     assert(newImage.getPixel(1, 1) == RGBPixel(2, 2, 2))
     assert(newImage.getPixel(2, 0) == RGBPixel(5, 5, 5))
     assert(newImage.getPixel(2, 1) == RGBPixel(4, 4, 4))
-
   }
 
   test("FlipFilter should flip image horizontally when flipValue is x") {
@@ -69,5 +68,24 @@ class FlipImageFilterTest extends FunSuite {
     assert(newImage.getPixel(2, 0) == RGBPixel(0, 0, 0))
     assert(newImage.getPixel(2, 1) == RGBPixel(1, 1, 1))
   }
+
+  test("FlipImageFilter should return an error for invalid flip value") {
+    val flipFilter = FlipImageFilter('x') // initially valid
+
+    // Using reflection to bypass the require check
+    val field = flipFilter.getClass.getDeclaredField("flipValue")
+    field.setAccessible(true)
+    field.set(flipFilter, 'z') // setting an invalid value
+
+    val pixelGrid = new PixelGrid[RGBPixel](3, 2)
+
+    val image = RGBImage(pixelGrid)
+
+    val result = flipFilter.apply(image)
+
+    assert(result.isLeft)
+    assert(result.left.get == "Flip value must be one of 'x' or 'y'")
+  }
+
 
 }

@@ -1,0 +1,192 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ScaleImageFilter</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">asciiart.image.filters.scale</a>
+</div>
+
+<h1>Coverage Summary for Class: ScaleImageFilter (asciiart.image.filters.scale)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ScaleImageFilter</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (24/24)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ScaleImageFilter$</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    90%
+  </span>
+  <span class="absValue">
+    (9/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    96%
+  </span>
+  <span class="absValue">
+    (24/25)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package asciiart.image.filters.scale
+&nbsp;
+&nbsp;import asciiart.image.filters.ImageFilter
+&nbsp;import asciiart.image.models
+&nbsp;import asciiart.image.models.grid.PixelGrid
+&nbsp;import asciiart.image.models.image.{AsciiImage, RGBImage}
+&nbsp;import asciiart.image.models.pixel.RGBPixel
+&nbsp;
+<b class="pc">&nbsp;case class ScaleImageFilter(val scale: Float) extends ImageFilter[RGBImage] {</b>
+&nbsp;//  val scale = {}
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Applies the filter to the image
+&nbsp;   *
+&nbsp;   *  @param image
+&nbsp;   *  @return
+&nbsp;   */
+&nbsp;  override def apply(image: RGBImage): Either[String, RGBImage] = {
+<b class="fc">&nbsp;    scale match {</b>
+<b class="fc">&nbsp;      case 0.25 =&gt; scale025(image)</b>
+<b class="fc">&nbsp;      case 1 =&gt; scale1(image)</b>
+<b class="fc">&nbsp;      case 4 =&gt; scale4(image)</b>
+<b class="fc">&nbsp;      case _ =&gt; Left(&quot;Scale must be one of 0.25, 1, 4&quot;)</b>
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+&nbsp;  private def scale025(image: RGBImage): Either[String, RGBImage] = {
+<b class="fc">&nbsp;    val width = image.width</b>
+<b class="fc">&nbsp;    val height = image.height</b>
+<b class="fc">&nbsp;    val pixelGrid = new PixelGrid[RGBPixel](height / 2, width / 2)</b>
+&nbsp;
+<b class="fc">&nbsp;    for (y &lt;- 0 until height / 2) {</b>
+<b class="fc">&nbsp;        for (x &lt;- 0 until width / 2) {</b>
+<b class="fc">&nbsp;            pixelGrid.setPixel(y, x, image.getPixel(y * 2, x * 2))</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    Right(models.image.RGBImage(pixelGrid))</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  private def scale1(image: RGBImage): Either[String, RGBImage] = {
+<b class="fc">&nbsp;    Right(image)</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  private def scale4(image: RGBImage): Either[String, RGBImage] = {
+<b class="fc">&nbsp;    val width = image.width</b>
+<b class="fc">&nbsp;    val height = image.height</b>
+<b class="fc">&nbsp;    val pixelGrid = new PixelGrid[RGBPixel](height * 2, width * 2)</b>
+&nbsp;
+<b class="fc">&nbsp;    for (y &lt;- 0 until height) {</b>
+<b class="fc">&nbsp;      for (x &lt;- 0 until width) {</b>
+<b class="fc">&nbsp;        pixelGrid.setPixel(y * 2, x * 2, image.getPixel(y, x))</b>
+<b class="fc">&nbsp;        pixelGrid.setPixel(y * 2, x * 2 + 1, image.getPixel(y, x))</b>
+<b class="fc">&nbsp;        pixelGrid.setPixel(y * 2 + 1, x * 2, image.getPixel(y, x))</b>
+<b class="fc">&nbsp;        pixelGrid.setPixel(y * 2 + 1, x * 2 + 1, image.getPixel(y, x))</b>
+&nbsp;      }
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    Right(models.image.RGBImage(pixelGrid))</b>
+&nbsp;  }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-01-10 16:49</div>
+</div>
+</body>
+</html>

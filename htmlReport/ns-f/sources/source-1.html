@@ -1,0 +1,106 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ImageFilter</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">asciiart.image.filters</a>
+</div>
+
+<h1>Coverage Summary for Class: ImageFilter (asciiart.image.filters)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">ImageFilter$MockitoMock$1022760346</td>
+  </tr>
+  <tr>
+    <td class="name">ImageFilter$MockitoMock$1022760346$auxiliary$52eaKM60</td>
+  </tr>
+  <tr>
+    <td class="name">ImageFilter$MockitoMock$1022760346$auxiliary$Ewbw2KI7</td>
+  </tr>
+  <tr>
+    <td class="name">ImageFilter$MockitoMock$1425716855</td>
+  </tr>
+  <tr>
+    <td class="name">ImageFilter$MockitoMock$1425716855$auxiliary$6melqvqq</td>
+  </tr>
+  <tr>
+    <td class="name">ImageFilter$MockitoMock$1425716855$auxiliary$Ou3SQ7pd</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package asciiart.image.filters
+&nbsp;
+&nbsp;import asciiart.image.models.image.Image
+&nbsp;
+&nbsp;
+&nbsp;/**
+&nbsp; * Trait for all image filters
+&nbsp; * @tparam A must be subclass of Image. This is the image to be filtered.
+&nbsp; */
+&nbsp;trait ImageFilter[A &lt;: Image] {
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Filters an image
+&nbsp;   *
+&nbsp;   * @param image to be filtered
+&nbsp;   * @return the filtered image if successful, error message otherwise
+&nbsp;   */
+&nbsp;  def apply(image: A): Either[String, A]
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-01-10 16:49</div>
+</div>
+</body>
+</html>

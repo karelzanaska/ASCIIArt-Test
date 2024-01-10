@@ -1,0 +1,159 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > TestableConsoleView</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">asciiart.ui</a>
+</div>
+
+<h1>Coverage Summary for Class: TestableConsoleView (asciiart.ui)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TestableConsoleView</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (16/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (23/23)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package asciiart.ui
+&nbsp;
+&nbsp;import asciiart.controllers.Controller
+&nbsp;import asciiart.image.convertors.image.ImageConverter
+&nbsp;import asciiart.image.exporters.{ImageExporter, RGBImageExporter}
+&nbsp;import asciiart.image.filters.ImageFilter
+&nbsp;import asciiart.image.importers.ImageImporter
+&nbsp;import asciiart.image.models.image.{AsciiImage, RGBImage}
+&nbsp;
+&nbsp;
+&nbsp;class TestableConsoleView(
+<b class="fc">&nbsp;                           val controller: Controller[RGBImage, AsciiImage],</b>
+<b class="fc">&nbsp;                           val imageImporter: Option[ImageImporter[RGBImage]],</b>
+<b class="fc">&nbsp;                           val asciiImageConverter: Option[ImageConverter[RGBImage, AsciiImage]],</b>
+<b class="fc">&nbsp;                           val imageRGBExporters: List[ImageExporter[RGBImage]],</b>
+<b class="fc">&nbsp;                           val imageAsciiExporters: List[ImageExporter[AsciiImage]],</b>
+<b class="fc">&nbsp;                           val imageFilters: List[ImageFilter[RGBImage]]</b>
+&nbsp;                         ) {
+&nbsp;  // Method to execute the conversion process and capture the output
+&nbsp;  def executeAndCaptureOutput(): Option[AsciiImage] = {
+<b class="fc">&nbsp;    imageImporter.flatMap { importer =&gt;</b>
+<b class="fc">&nbsp;      val rgbImageOption = controller.importImage(importer)</b>
+&nbsp;
+&nbsp;      // Apply filters only if rgbImage is present
+<b class="fc">&nbsp;      val filteredImageOption = rgbImageOption.flatMap { rgbImage =&gt;</b>
+<b class="fc">&nbsp;        imageFilters.foldLeft(Option(rgbImage)) { (accOption, filter) =&gt;</b>
+<b class="fc">&nbsp;          accOption.flatMap(acc =&gt; controller.applyFilter(acc, filter))</b>
+&nbsp;        }
+&nbsp;      }
+&nbsp;
+&nbsp;      // Apply converter only if filteredImage is present
+<b class="fc">&nbsp;      val asciiImageOption = filteredImageOption.flatMap { filteredImage =&gt;</b>
+<b class="fc">&nbsp;        asciiImageConverter.flatMap(converter =&gt; controller.applyConvertor(filteredImage, converter))</b>
+&nbsp;      }
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;      filteredImageOption.foreach { filteredImage =&gt;</b>
+<b class="fc">&nbsp;        imageRGBExporters.foreach(exporter =&gt; {</b>
+<b class="fc">&nbsp;          if (exporter.isInstanceOf[RGBImageExporter]) {</b>
+<b class="fc">&nbsp;            exporter.exportImage(filteredImage)</b>
+&nbsp;          }
+&nbsp;        })
+&nbsp;      }
+<b class="fc">&nbsp;      asciiImageOption.foreach { asciiImage =&gt;</b>
+<b class="fc">&nbsp;        imageAsciiExporters.foreach(exporter =&gt; {</b>
+<b class="fc">&nbsp;          if (exporter.isInstanceOf[ImageExporter[AsciiImage]]) {</b>
+<b class="fc">&nbsp;            controller.exportImage(asciiImage, exporter)</b>
+&nbsp;          }
+&nbsp;        })
+&nbsp;      }
+&nbsp;
+<b class="fc">&nbsp;      asciiImageOption</b>
+&nbsp;    }
+&nbsp;  }
+<b class="fc">&nbsp;}</b>
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-01-10 16:49</div>
+</div>
+</body>
+</html>

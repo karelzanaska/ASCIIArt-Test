@@ -1,0 +1,154 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Controller</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">asciiart.controllers</a>
+</div>
+
+<h1>Coverage Summary for Class: Controller (asciiart.controllers)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">Controller$MockitoMock$4190005</td>
+  </tr>
+  <tr>
+    <td class="name">Controller$MockitoMock$4190005$auxiliary$97ns8h5R</td>
+  </tr>
+  <tr>
+    <td class="name">Controller$MockitoMock$4190005$auxiliary$hwUijRKZ</td>
+  </tr>
+  <tr>
+    <td class="name">Controller$MockitoMock$420930800</td>
+  </tr>
+  <tr>
+    <td class="name">Controller$MockitoMock$420930800$auxiliary$hFhbXQbL</td>
+  </tr>
+  <tr>
+    <td class="name">Controller$MockitoMock$420930800$auxiliary$SnCKxZ5V</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package asciiart.controllers
+&nbsp;
+&nbsp;import asciiart.image.convertors.image.ImageConverter
+&nbsp;import asciiart.image.exporters.ImageExporter
+&nbsp;import asciiart.image.filters.ImageFilter
+&nbsp;import asciiart.image.importers.ImageImporter
+&nbsp;import asciiart.image.models.image.{AsciiImage, Image, RGBImage}
+&nbsp;
+&nbsp;
+&nbsp;/**
+&nbsp; * Trait for handling the application logic
+&nbsp; *
+&nbsp; * @tparam A must be subclass of Image. This is the input image.
+&nbsp; * @tparam B must be subclass of Image. This is the output image.
+&nbsp; */
+&nbsp;trait Controller[A &lt;: Image, B &lt;: Image] {
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Shows the help message
+&nbsp;   */
+&nbsp;  def showHelp(): Unit
+&nbsp;
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Shows an error message
+&nbsp;   *
+&nbsp;   * @param message to be shown on stderr
+&nbsp;   */
+&nbsp;  def showErrorMessage(message: String): Unit
+&nbsp;
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Imports an image
+&nbsp;   *
+&nbsp;   * @param imageImporter to use for importing the image
+&nbsp;   * @return the imported image if successful, None otherwise
+&nbsp;   */
+&nbsp;  def importImage(imageImporter: ImageImporter[A]): Option[A]
+&nbsp;
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Exports an image
+&nbsp;   * @param image to be exported
+&nbsp;   * @param imageExporter to use for exporting the image
+&nbsp;   */
+&nbsp;  def exportImage(image: B, imageExporter: ImageExporter[B]): Unit
+&nbsp;
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Applies a filter to an image
+&nbsp;   *
+&nbsp;   * @param image to be filtered
+&nbsp;   * @param imageFilter to use for filtering
+&nbsp;   * @return Option containing the filtered image if successful, None otherwise
+&nbsp;   */
+&nbsp;  def applyFilter(image: A, filter: ImageFilter[A]): Option[A]
+&nbsp;
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Applies a convertor to an image
+&nbsp;   *
+&nbsp;   * @param image to convert
+&nbsp;   * @param convertor to use for conversion
+&nbsp;   * @return Option containing the converted image if successful, None otherwise
+&nbsp;   */
+&nbsp;  def applyConvertor(image: A, imageConvertor: ImageConverter[A, B]): Option[B]
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-01-10 16:49</div>
+</div>
+</body>
+</html>

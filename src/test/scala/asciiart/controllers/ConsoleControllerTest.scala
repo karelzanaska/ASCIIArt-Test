@@ -1,9 +1,10 @@
 package asciiart.controllers
 
 import asciiart.Main.controller
+import asciiart.image.convertors.image.ImageConverter
 import asciiart.image.filters.ImageFilter
 import asciiart.image.importers.ImageImporter
-import asciiart.image.models.image.RGBImage
+import asciiart.image.models.image.{AsciiImage, RGBImage}
 import org.mockito.ArgumentMatchersSugar.any
 import org.mockito.MockitoSugar.{mock, when}
 import org.scalatest.FunSuite
@@ -54,5 +55,23 @@ class ConsoleControllerTest extends FunSuite {
     val result = new ConsoleController().applyFilter(mock[RGBImage], filter)
     assert(result === None)
   }
+
+  test("applyConvertor should return None and set error message when conversion fails") {
+    // Mock the ImageConverter
+    val imageConverter = mock[ImageConverter[RGBImage, AsciiImage]]
+    val errorMessage = "Conversion error"
+    when(imageConverter.convert(any[RGBImage])).thenReturn(Left(errorMessage))
+
+    val controller = new ConsoleController()
+    val rgbImage = mock[RGBImage]
+
+    // Apply the convertor
+    val result = controller.applyConvertor(rgbImage, imageConverter)
+
+    assert(result === None)
+
+    assert(controller.getLastErrorMessage() === errorMessage)
+  }
+
 
 }

@@ -1,0 +1,105 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ImageImporter</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">asciiart.image.importers</a>
+</div>
+
+<h1>Coverage Summary for Class: ImageImporter (asciiart.image.importers)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">ImageImporter$MockitoMock$1581001513</td>
+  </tr>
+  <tr>
+    <td class="name">ImageImporter$MockitoMock$1581001513$auxiliary$uNo6RTdd</td>
+  </tr>
+  <tr>
+    <td class="name">ImageImporter$MockitoMock$1581001513$auxiliary$xIbyQHA4</td>
+  </tr>
+  <tr>
+    <td class="name">ImageImporter$MockitoMock$2028722374</td>
+  </tr>
+  <tr>
+    <td class="name">ImageImporter$MockitoMock$2028722374$auxiliary$82oaTUr8</td>
+  </tr>
+  <tr>
+    <td class="name">ImageImporter$MockitoMock$2028722374$auxiliary$PntKyXdC</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package asciiart.image.importers
+&nbsp;
+&nbsp;import asciiart.image.models.image.{AsciiImage, Image, RGBImage}
+&nbsp;
+&nbsp;/**
+&nbsp; * All image importers inherit this trait
+&nbsp; * @tparam A must be subclass of Image. This is the image to be imported.
+&nbsp; */
+&nbsp;trait ImageImporter[A &lt;: Image] {
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Exports an image
+&nbsp;   *
+&nbsp;   * @param image to be imported
+&nbsp;   * @return the imported image if successful, error message otherwise
+&nbsp;   */
+&nbsp;  def importImage(): Either[String, A]
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-01-10 16:49</div>
+</div>
+</body>
+</html>

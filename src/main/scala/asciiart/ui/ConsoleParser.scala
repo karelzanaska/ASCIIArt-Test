@@ -55,10 +55,6 @@ class ConsoleParser(private val args: List[String]) {
         command._1 match {
           case "image" =>
             command._2 match {
-//              case Some(path) if path.endsWith(".jpg") => Right(FileSystemImageImporter(path))
-//              case Some(path) if path.endsWith(".png") => Right(FileSystemImageImporter(path))
-//              case Some(path) if path.endsWith(".gif") => Right(FileSystemImageImporter(path))
-//              case Some(path) if path.endsWith(".bmp") => Right(FileSystemImageImporter(path))
               case Some(path) if path.endsWith(".jpg") => Right(JPGImageImporter(path))
               case Some(path) if path.endsWith(".png") => Right(JPGImageImporter(path))
               case Some(path) if path.endsWith(".gif") => Right(JPGImageImporter(path))

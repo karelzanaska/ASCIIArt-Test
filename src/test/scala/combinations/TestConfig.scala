@@ -18,12 +18,8 @@ object TestConfig {
     "asciiart.image.importers.JPGImageImporter" -> StringValue("/home/karel/FEL/ZKS/asciiart/samples/cloud.jpg"),
     "asciiart.image.importers.JPGImageImporter" -> StringValue(baseSamplePath + "cloud.jpg"),
 
-//    "asciiart.image.importers.PNGImageImporter" -> StringValue("/home/karel/FEL/ZKS/asciiart/samples/cloud.png"),
     "asciiart.image.importers.PNGImageImporter" -> StringValue(baseSamplePath + "cloud.png"),
-//    "asciiart.image.importers.BMPImageImporter" -> StringValue("/home/karel/FEL/ZKS/asciiart/samples/cloud.bmp"),
     "asciiart.image.importers.BMPImageImporter" -> StringValue(baseSamplePath + "cloud.bmp"),
-//    "asciiart.image.importers.BMPImageImporter" -> StringValue(baseSamplePath + "cloud.bmp"),
-//    "asciiart.image.importers.GIFImageImporter" -> StringValue("/home/karel/FEL/ZKS/asciiart/samples/cloud.gif"),
     "asciiart.image.importers.GIFImageImporter" -> StringValue(baseSamplePath + "cloud.gif"),
     "asciiart.image.importers.RandomImageGeneratorImporter" -> NullValue(),
     "asciiart.image.importers.GradientRandomImageGeneratorImporter" -> NullValue(),

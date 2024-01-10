@@ -3,6 +3,8 @@ package asciiart.image.convertors.image
 import asciiart.image.models.grid.PixelGrid
 import asciiart.image.models.image.RGBImage
 import asciiart.image.models.pixel.RGBPixel
+import org.mockito.ArgumentMatchersSugar.anyInt
+import org.mockito.MockitoSugar.{mock, when}
 import org.scalatest.FunSuite
 
 
@@ -41,7 +43,6 @@ class PatternBasedAsciiImageConverterTest extends FunSuite {
     }
   }
 
-
   test("convert should return error for invalid input") {
     val imageConverter = PatternBasedAsciiImageConverter()
     val rgbPixelGrid = PixelGrid[RGBPixel](0, 0) // Invalid grid size
@@ -50,7 +51,25 @@ class PatternBasedAsciiImageConverterTest extends FunSuite {
     val result = imageConverter.convert(image)
 
     assert(result.isRight)
-    // Check for a specific error message if your converter is designed to return one
   }
 
+  test("convert should return an error message when an exception occurs") {
+    // Create a mock RGBImage
+    val mockImage = mock[RGBImage]
+    when(mockImage.height).thenReturn(1)
+    when(mockImage.width).thenReturn(1)
+    when(mockImage.getPixel(anyInt, anyInt)).thenThrow(new RuntimeException("Test exception"))
+
+    val imageConverter = PatternBasedAsciiImageConverter()
+
+    // Convert the mock image
+    val result = imageConverter.convert(mockImage)
+
+    // Assert that result is a Left containing the exception message
+    assert(result.isLeft)
+    assert(result.left.get === "Test exception")
+  }
+
+
 }
+

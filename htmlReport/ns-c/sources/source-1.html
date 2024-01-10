@@ -1,0 +1,158 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > AsciiImage</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">asciiart.image.models.image</a>
+</div>
+
+<h1>Coverage Summary for Class: AsciiImage (asciiart.image.models.image)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AsciiImage</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/11)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">AsciiImage$</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    87.5%
+  </span>
+  <span class="absValue">
+    (7/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    91.7%
+  </span>
+  <span class="absValue">
+    (11/12)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package asciiart.image.models.image
+&nbsp;
+&nbsp;import asciiart.image.models.grid.PixelGrid
+&nbsp;import asciiart.image.models.pixel.{AsciiPixel, Pixel}
+&nbsp;
+<b class="pc">&nbsp;case class AsciiImage(private val pixelGrid: PixelGrid[AsciiPixel]) extends Image {</b>
+&nbsp;
+<b class="fc">&nbsp;  val width: Int = pixelGrid.width</b>
+<b class="fc">&nbsp;  val height: Int = pixelGrid.height</b>
+&nbsp;
+&nbsp;  override def getPixel(y: Int, x: Int): AsciiPixel = {
+<b class="fc">&nbsp;    pixelGrid.getPixel(y, x)</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  override def toString(): String = {
+<b class="fc">&nbsp;    val sb: StringBuilder = new StringBuilder</b>
+&nbsp;
+<b class="fc">&nbsp;    for (y &lt;- 0 until height) {</b>
+<b class="fc">&nbsp;      for (x &lt;- 0 until width) {</b>
+<b class="fc">&nbsp;        val asciiValue = getPixel(y, x).value</b>
+<b class="fc">&nbsp;        sb.append(asciiValue)</b>
+&nbsp;      }
+<b class="fc">&nbsp;      sb.append(&quot;\n&quot;)</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    sb.toString()</b>
+&nbsp;  }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-01-10 16:49</div>
+</div>
+</body>
+</html>

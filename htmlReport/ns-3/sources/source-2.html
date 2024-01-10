@@ -1,0 +1,175 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > PatternBasedAsciiImageConverter</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">asciiart.image.convertors.image</a>
+</div>
+
+<h1>Coverage Summary for Class: PatternBasedAsciiImageConverter (asciiart.image.convertors.image)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PatternBasedAsciiImageConverter</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (20/20)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">PatternBasedAsciiImageConverter$</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    85.7%
+  </span>
+  <span class="absValue">
+    (6/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    95.2%
+  </span>
+  <span class="absValue">
+    (20/21)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package asciiart.image.convertors.image
+&nbsp;
+&nbsp;
+&nbsp;import asciiart.image.models.image.{AsciiImage, RGBImage}
+&nbsp;import asciiart.image.models.pixel.{AsciiPixel, RGBPixel}
+&nbsp;import asciiart.image.convertors.image.ImageConverter
+&nbsp;import asciiart.image.models.grid.PixelGrid
+&nbsp;
+&nbsp;
+<b class="pc">&nbsp;case class PatternBasedAsciiImageConverter() extends ImageConverter[RGBImage, AsciiImage] {</b>
+&nbsp;
+<b class="fc">&nbsp;  private val patterns = List(</b>
+<b class="fc">&nbsp;    (0 to 25, &#39; &#39;),</b>
+<b class="fc">&nbsp;    (26 to 50, &#39;.&#39;),</b>
+<b class="fc">&nbsp;    (51 to 75, &#39;:&#39;),</b>
+<b class="fc">&nbsp;    (76 to 100, &#39;-&#39;),</b>
+<b class="fc">&nbsp;    (101 to 125, &#39;=&#39;),</b>
+<b class="fc">&nbsp;    (126 to 150, &#39;+&#39;),</b>
+<b class="fc">&nbsp;    (151 to 175, &#39;*&#39;),</b>
+<b class="fc">&nbsp;    (176 to 200, &#39;#&#39;),</b>
+<b class="fc">&nbsp;    (201 to 225, &#39;%&#39;),</b>
+<b class="fc">&nbsp;    (226 to 255, &#39;@&#39;)</b>
+&nbsp;  )
+&nbsp;
+&nbsp;  private def matchPattern(value: Int): Char = {
+<b class="fc">&nbsp;    patterns.find { case (range, _) =&gt; range.contains(value) }.map(_._2).getOrElse(&#39; &#39;)</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  override def convert(image: RGBImage): Either[String, AsciiImage] = {
+&nbsp;    try {
+<b class="fc">&nbsp;      val asciiGrid = PixelGrid[AsciiPixel](image.height, image.width)</b>
+&nbsp;
+<b class="fc">&nbsp;      for (y &lt;- 0 until image.height; x &lt;- 0 until image.width) {</b>
+<b class="fc">&nbsp;        val pixel = image.getPixel(y, x)</b>
+<b class="fc">&nbsp;        val grayscale = (0.3 * pixel.red + 0.59 * pixel.green + 0.11 * pixel.blue).toInt</b>
+<b class="fc">&nbsp;        asciiGrid.setPixel(y, x, AsciiPixel(matchPattern(grayscale)))</b>
+&nbsp;      }
+&nbsp;
+<b class="fc">&nbsp;      Right(AsciiImage(asciiGrid))</b>
+&nbsp;    }
+&nbsp;    catch {
+<b class="fc">&nbsp;      case e: Exception =&gt; Left(e.getMessage)</b>
+&nbsp;    }
+&nbsp;  }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-01-10 16:49</div>
+</div>
+</body>
+</html>

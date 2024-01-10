@@ -1,0 +1,162 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ConsoleView</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">asciiart.ui</a>
+</div>
+
+<h1>Coverage Summary for Class: ConsoleView (asciiart.ui)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ConsoleView</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (28/28)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package asciiart.ui
+&nbsp;
+&nbsp;import asciiart.controllers.Controller
+&nbsp;import asciiart.image.convertors.image.ImageConverter
+&nbsp;import asciiart.image.exporters.ImageExporter
+&nbsp;import asciiart.image.filters.ImageFilter
+&nbsp;import asciiart.image.importers.ImageImporter
+&nbsp;import asciiart.image.models.image.{AsciiImage, RGBImage}
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;class ConsoleView(val controller: Controller[RGBImage, AsciiImage], args: List[String]) {</b>
+&nbsp;
+&nbsp;  private def validateEither[T](either: Either[String, T]): Option[T] = {
+<b class="fc">&nbsp;    either match {</b>
+<b class="fc">&nbsp;      case Left(value) =&gt;</b>
+<b class="fc">&nbsp;        controller.showErrorMessage(value)</b>
+<b class="fc">&nbsp;        None</b>
+<b class="fc">&nbsp;      case Right(value) =&gt; Some(value)</b>
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+<b class="fc">&nbsp;  def run(): Unit = {</b>
+<b class="fc">&nbsp;    val consoleParser: ConsoleParser = new ConsoleParser(args)</b>
+&nbsp;
+&nbsp;    // if the user wants to see the help message, show it and exit
+<b class="fc">&nbsp;    if (consoleParser.isHelp()) {</b>
+<b class="fc">&nbsp;      controller.showHelp()</b>
+&nbsp;      return
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    val imageImporter: Option[ImageImporter[RGBImage]] = validateEither(consoleParser.getImageImporter())</b>
+<b class="fc">&nbsp;    val asciiImageConvertor: Option[ImageConverter[RGBImage, AsciiImage]] = validateEither(consoleParser.getAsciiImageConvertor())</b>
+<b class="fc">&nbsp;    val imageRGBExporters: Option[List[ImageExporter[RGBImage]]] = validateEither(consoleParser.getRGBImageExporters())</b>
+<b class="fc">&nbsp;    val imageAsciiExporters: Option[List[ImageExporter[AsciiImage]]] = validateEither(consoleParser.getAsciiImageExporters())</b>
+<b class="fc">&nbsp;    val imageFilters: Option[List[ImageFilter[RGBImage]]] = validateEither(consoleParser.getImageFilters())</b>
+&nbsp;
+<b class="fc">&nbsp;    (imageImporter, asciiImageConvertor, imageAsciiExporters) match {</b>
+<b class="fc">&nbsp;      case (Some(image), Some(convertor), Some(exporters)) =&gt;</b>
+<b class="fc">&nbsp;        val imageImporter = controller.importImage(image)</b>
+&nbsp;
+<b class="fc">&nbsp;        val rgbImage = imageImporter</b>
+&nbsp;
+<b class="fc">&nbsp;        val filteredImage = imageFilters.getOrElse(Nil).foldLeft(rgbImage)((acc, filter) =&gt; controller.applyFilter(acc.getOrElse(return ), filter)).getOrElse(return )</b>
+&nbsp;
+<b class="fc">&nbsp;        val asciiImage = controller.applyConvertor(filteredImage, convertor)</b>
+<b class="fc">&nbsp;        imageRGBExporters.getOrElse(Nil).foreach(exporter =&gt; {</b>
+<b class="fc">&nbsp;          exporter.exportImage(filteredImage)</b>
+&nbsp;        })
+<b class="fc">&nbsp;        val exportedAsciiImage = asciiImage.getOrElse(return)</b>
+&nbsp;
+<b class="fc">&nbsp;        exporters.foreach(exporter =&gt; {</b>
+<b class="fc">&nbsp;          controller.exportImage(exportedAsciiImage, exporter)</b>
+&nbsp;        })
+<b class="fc">&nbsp;      case _ =&gt;</b>
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+<b class="fc">&nbsp;}</b>
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-01-10 16:49</div>
+</div>
+</body>
+</html>
