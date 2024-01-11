@@ -1,5 +1,6 @@
 package asciiart.image.filters.flip
 
+import asciiart.StandardTestsGroup
 import asciiart.image.models.grid.PixelGrid
 import asciiart.image.models.image.RGBImage
 import asciiart.image.models.pixel.RGBPixel
@@ -7,7 +8,7 @@ import org.scalatest.FunSuite
 
 class FlipImageFilterTest extends FunSuite {
 
-  test("FlipFilter should flip image vertically when flipValue is y") {
+  test("FlipFilter should flip image vertically when flipValue is y", StandardTestsGroup) {
     val flipValue = 'y'
     val flipFilter = FlipImageFilter(flipValue)
 
@@ -38,7 +39,7 @@ class FlipImageFilterTest extends FunSuite {
     assert(newImage.getPixel(2, 1) == RGBPixel(4, 4, 4))
   }
 
-  test("FlipFilter should flip image horizontally when flipValue is x") {
+  test("FlipFilter should flip image horizontally when flipValue is x", StandardTestsGroup) {
     val flipValue = 'x'
     val flipFilter = FlipImageFilter(flipValue)
 
@@ -69,7 +70,7 @@ class FlipImageFilterTest extends FunSuite {
     assert(newImage.getPixel(2, 1) == RGBPixel(1, 1, 1))
   }
 
-  test("FlipImageFilter should return an error for invalid flip value") {
+  test("FlipImageFilter should return an error for invalid flip value", StandardTestsGroup) {
     val flipFilter = FlipImageFilter('x') // initially valid
 
     // Using reflection to bypass the require check

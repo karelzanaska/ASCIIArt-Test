@@ -1,5 +1,6 @@
-package combinations
+package asciiart.combinations
 
+import asciiart.CombinationTestsGroup
 import org.scalatest._
 
 import scala.io.Source
@@ -23,7 +24,7 @@ import play.api.libs.json._
 class ASCIIArtConverterTests extends FlatSpec with Matchers {
 
 //  val configJson: JsValue = Json.parse(Source.fromFile("/home/karel/FEL/ZKS/asciiart/src/test/scala/combinations/testConfig.json").mkString)
-  val basePath = "src/test/scala/combinations/"
+  val basePath = "src/test/scala/asciiart/combinations/"
 
 
   def parseCSV(filePath: String): List[(String, String, String, String)] = {
@@ -38,15 +39,12 @@ class ASCIIArtConverterTests extends FlatSpec with Matchers {
   }
 
 
-//  val testConfigs = parseCSV("/home/karel/FEL/ZKS/AsciiArt-output.csv")
-//  val testConfigs2Way = parseCSV("/home/karel/FEL/ZKS/AsciiArt-output-2-way.csv")
-//  val testConfigs3Way = parseCSV("/home/karel/FEL/ZKS/AsciiArt-output-3-way.csv")
   val testConfigs2Way = parseCSV(basePath + "AsciiArt-output-2-way.csv")
   val testConfigs3Way = parseCSV(basePath + "AsciiArt-output-3-way.csv")
 
 
   testConfigs2Way.foreach { case (importerName, filterName, exporterName, rgbExporterName) =>
-    s"ASCII Art 2-way conversion with $importerName, $filterName, $exporterName, $rgbExporterName" should "work correctly" in {
+    s"ASCII Art 2-way conversion with $importerName, $filterName, $exporterName, $rgbExporterName" should "work correctly" taggedAs CombinationTestsGroup in {
       val controller = new ConsoleController()
 
       val importerConfig = TestConfig.importers.getOrElse(importerName, StringValue(""))
@@ -82,7 +80,7 @@ class ASCIIArtConverterTests extends FlatSpec with Matchers {
 
 
   testConfigs3Way.foreach { case (importerName, filterName, exporterName, rgbExporterName) =>
-    s"ASCII Art 3-way conversion with $importerName, $filterName, $exporterName, $rgbExporterName" should "work correctly" in {
+    s"ASCII Art 3-way conversion with $importerName, $filterName, $exporterName, $rgbExporterName" should "work correctly" taggedAs CombinationTestsGroup in {
       val controller = new ConsoleController()
 
       val importerConfig = TestConfig.importers.getOrElse(importerName, StringValue(""))
@@ -110,13 +108,9 @@ class ASCIIArtConverterTests extends FlatSpec with Matchers {
         List(filter)
       )
 
-      // Execute the ASCII art conversion process and capture the result
       val result = view.executeAndCaptureOutput()
 
-      // Assertions about the result
-      // Replace this with appropriate assertions based on your application's expected behavior
       result should not be None
-      // Additional assertions can be added here
     }
   }
 
@@ -141,7 +135,6 @@ class ASCIIArtConverterTests extends FlatSpec with Matchers {
               case IntValue(value) => value
               case FloatValue(value) => value
               case NullValue() => null
-              // Handle other types as needed
               case _ => getDefaultParamValue(param.typeSignature)
             }
           }

@@ -1,5 +1,6 @@
 package asciiart.image.convertors.image
 
+import asciiart.StandardTestsGroup
 import asciiart.image.models.grid.PixelGrid
 import asciiart.image.models.image.RGBImage
 import asciiart.image.models.pixel.RGBPixel
@@ -10,7 +11,7 @@ import org.scalatest.FunSuite
 
 class PatternBasedAsciiImageConverterTest extends FunSuite {
 
-  test("convert should correctly map specific grayscale values to ASCII characters") {
+  test("convert should correctly map specific grayscale values to ASCII characters", StandardTestsGroup) {
     val imageConverter = PatternBasedAsciiImageConverter()
     val rgbPixelGrid = PixelGrid[RGBPixel](1, 1)
     rgbPixelGrid.setPixel(0, 0, RGBPixel(50, 50, 50)) // Grayscale value in range 26 to 50
@@ -25,7 +26,7 @@ class PatternBasedAsciiImageConverterTest extends FunSuite {
     }
   }
 
-  test("convert should handle various grayscale ranges correctly") {
+  test("convert should handle various grayscale ranges correctly", StandardTestsGroup) {
     val imageConverter = PatternBasedAsciiImageConverter()
     val rgbPixelGrid = PixelGrid[RGBPixel](3, 1)
     rgbPixelGrid.setPixel(0, 0, RGBPixel(10, 10, 10)) // Low grayscale
@@ -43,7 +44,7 @@ class PatternBasedAsciiImageConverterTest extends FunSuite {
     }
   }
 
-  test("convert should return error for invalid input") {
+  test("convert should return error for invalid input", StandardTestsGroup) {
     val imageConverter = PatternBasedAsciiImageConverter()
     val rgbPixelGrid = PixelGrid[RGBPixel](0, 0) // Invalid grid size
     val image = RGBImage(rgbPixelGrid)
@@ -53,7 +54,7 @@ class PatternBasedAsciiImageConverterTest extends FunSuite {
     assert(result.isRight)
   }
 
-  test("convert should return an error message when an exception occurs") {
+  test("convert should return an error message when an exception occurs", StandardTestsGroup) {
     // Create a mock RGBImage
     val mockImage = mock[RGBImage]
     when(mockImage.height).thenReturn(1)

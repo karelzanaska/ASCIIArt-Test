@@ -1,16 +1,17 @@
 package asciiart.image.models.grid
 
+import asciiart.StandardTestsGroup
 import org.scalatest.FunSuite
 
 class PixelGridTest extends FunSuite {
 
-  test("setPixel and getPixel should work correctly") {
+  test("setPixel and getPixel should work correctly", StandardTestsGroup) {
     val pixelGrid = PixelGrid[Int](10, 10)
     pixelGrid.setPixel(5, 5, 42)
     assert(pixelGrid.getPixel(5, 5) == 42)
   }
 
-  test("setPixel should throw exception if indexes are out of range") {
+  test("setPixel should throw exception if indexes are out of range", StandardTestsGroup) {
     val pixelGrid = PixelGrid[Int](10, 10)
     intercept[IndexOutOfBoundsException] {
       pixelGrid.setPixel(-1, 5, 42)
@@ -26,7 +27,7 @@ class PixelGridTest extends FunSuite {
     }
   }
 
-  test("getPixel should throw exception if indexes are out of range") {
+  test("getPixel should throw exception if indexes are out of range", StandardTestsGroup) {
     val pixelGrid = PixelGrid[Int](10, 10)
     intercept[IndexOutOfBoundsException] {
       pixelGrid.getPixel(-1, 5)

@@ -1,5 +1,6 @@
 package asciiart.image.exporters
 
+import asciiart.StandardTestsGroup
 import asciiart.image.models.image.RGBImage
 import asciiart.image.models.pixel.RGBPixel
 import org.mockito.ArgumentMatchersSugar.anyInt
@@ -10,7 +11,7 @@ import org.scalatest.FunSuite
 
 class JPGImageExporterTest extends FunSuite with MockitoSugar {
 
-  test("JPGImageExporter should set correct file path and format") {
+  test("JPGImageExporter should set correct file path and format", StandardTestsGroup) {
     val filePath = "test.jpg"
     val exporter = JPGImageExporter(filePath)
 
@@ -18,7 +19,7 @@ class JPGImageExporterTest extends FunSuite with MockitoSugar {
     assert(exporter.exportFormat == "jpg")
   }
 
-  test("exportImage should successfully export an image") {
+  test("exportImage should successfully export an image", StandardTestsGroup) {
     val filePath = "test.jpg"
     val exporter = JPGImageExporter(filePath)
 
@@ -30,10 +31,9 @@ class JPGImageExporterTest extends FunSuite with MockitoSugar {
     val result = exporter.exportImage(mockImage)
 
     assert(result.isRight)
-    // Additional checks can be added here to verify file creation if necessary
   }
 
-  test("exportImage should return error if there is an exception") {
+  test("exportImage should return error if there is an exception", StandardTestsGroup) {
     val filePath = "invalidPath/test.jpg"
     val exporter = JPGImageExporter(filePath)
 
@@ -45,6 +45,5 @@ class JPGImageExporterTest extends FunSuite with MockitoSugar {
     val result = exporter.exportImage(mockImage)
 
     assert(result.isLeft)
-    // The exact error message can depend on the exception thrown
   }
 }

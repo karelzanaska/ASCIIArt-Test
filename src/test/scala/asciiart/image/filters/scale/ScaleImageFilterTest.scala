@@ -1,5 +1,6 @@
 package asciiart.image.filters.scale
 
+import asciiart.StandardTestsGroup
 import asciiart.image.models.grid.PixelGrid
 import asciiart.image.models.image.RGBImage
 import asciiart.image.models.pixel.RGBPixel
@@ -7,7 +8,7 @@ import org.scalatest.FunSuite
 
 class ScaleImageFilterTest extends FunSuite {
 
-  test("ScaleFilter 0.25 should work correctly") {
+  test("ScaleFilter 0.25 should work correctly", StandardTestsGroup) {
     val pixelGrid = new PixelGrid[RGBPixel](2, 2)
     pixelGrid.setPixel(0, 0, RGBPixel(1, 2, 3))
     pixelGrid.setPixel(0, 1, RGBPixel(4, 5, 6))
@@ -25,7 +26,7 @@ class ScaleImageFilterTest extends FunSuite {
     assert(newImage.getPixel(0, 0) === RGBPixel(1, 2, 3))
   }
 
-  test("ScaleFilter 1 should work correctly") {
+  test("ScaleFilter 1 should work correctly", StandardTestsGroup) {
     val pixelGrid = new PixelGrid[RGBPixel](2, 2)
     pixelGrid.setPixel(0, 0, RGBPixel(1, 2, 3))
     pixelGrid.setPixel(0, 1, RGBPixel(4, 5, 6))
@@ -42,7 +43,7 @@ class ScaleImageFilterTest extends FunSuite {
 
   }
 
-  test("ScaleFilter 4 should work correctly") {
+  test("ScaleFilter 4 should work correctly", StandardTestsGroup) {
     val pixelGrid = new PixelGrid[RGBPixel](2, 2)
     pixelGrid.setPixel(0, 0, RGBPixel(1, 2, 3))
     pixelGrid.setPixel(0, 1, RGBPixel(4, 5, 6))
@@ -78,7 +79,7 @@ class ScaleImageFilterTest extends FunSuite {
     assert(newImage.getPixel(3, 3) === RGBPixel(10, 11, 12))
   }
 
-  test("ScaleFilter with invalid argument returns error") {
+  test("ScaleFilter with invalid argument returns error", StandardTestsGroup) {
     val pixelGrid = new PixelGrid[RGBPixel](2, 2)
     pixelGrid.setPixel(0, 0, RGBPixel(1, 2, 3))
     pixelGrid.setPixel(0, 1, RGBPixel(4, 5, 6))

@@ -6,6 +6,9 @@ import asciiart.image.exporters.{StdoutImageExporter, TxtImageExporter}
 import asciiart.image.importers.{FileSystemImageImporter, JPGImageImporter, RandomImageGeneratorImporter}
 import org.scalatest.FunSuite
 
+import org.scalatest.Tag
+
+
 class ConsoleParserTest extends FunSuite {
 
   test("isHelp should return true when h flag is passed") {

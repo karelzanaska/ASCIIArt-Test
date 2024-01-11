@@ -1,6 +1,7 @@
 package asciiart.controllers
 
 import asciiart.Main.controller
+import asciiart.StandardTestsGroup
 import asciiart.image.convertors.image.ImageConverter
 import asciiart.image.filters.ImageFilter
 import asciiart.image.importers.ImageImporter
@@ -13,7 +14,7 @@ import java.io.ByteArrayOutputStream
 
 class ConsoleControllerTest extends FunSuite {
 
-  test("showHelp should print correct usage message") {
+  test("showHelp should print correct usage message", StandardTestsGroup) {
     val controller = new ConsoleController()
     val output = new ByteArrayOutputStream()
     Console.withOut(output) {
@@ -25,7 +26,7 @@ class ConsoleControllerTest extends FunSuite {
     assert(outputString == expectedOutput)
   }
 
-  test("showErrorMessage should print correct error message") {
+  test("showErrorMessage should print correct error message", StandardTestsGroup) {
     val controller = new ConsoleController()
     val output = new ByteArrayOutputStream()
     Console.withErr(output) {
@@ -35,29 +36,28 @@ class ConsoleControllerTest extends FunSuite {
     assert(outputString === "An error occurred\n")
   }
 
-  test("importImage should return None when image is not valid") {
+  test("importImage should return None when image is not valid", StandardTestsGroup) {
     val imageImporter = mock[ImageImporter[RGBImage]]
     when(imageImporter.importImage()).thenReturn(Left("Test error message"))
     val result = new ConsoleController().importImage(imageImporter)
     assert(result === None)
   }
 
-  test("importImage should import RGBImage when image is valid") {
+  test("importImage should import RGBImage when image is valid", StandardTestsGroup) {
     val imageImporter = mock[ImageImporter[RGBImage]]
     when(imageImporter.importImage()).thenReturn(Right(mock[RGBImage]))
     val result = new ConsoleController().importImage(imageImporter)
     assert(result.isDefined)
   }
 
-  test("applyFilter should return None is image is not valid") {
+  test("applyFilter should return None is image is not valid", StandardTestsGroup) {
     val filter = mock[ImageFilter[RGBImage]]
     when(filter.apply(any[RGBImage])).thenReturn(Left("Test error message"))
     val result = new ConsoleController().applyFilter(mock[RGBImage], filter)
     assert(result === None)
   }
 
-  test("applyConvertor should return None and set error message when conversion fails") {
-    // Mock the ImageConverter
+  test("applyConvertor should return None and set error message when conversion fails", StandardTestsGroup) {
     val imageConverter = mock[ImageConverter[RGBImage, AsciiImage]]
     val errorMessage = "Conversion error"
     when(imageConverter.convert(any[RGBImage])).thenReturn(Left(errorMessage))
@@ -65,7 +65,6 @@ class ConsoleControllerTest extends FunSuite {
     val controller = new ConsoleController()
     val rgbImage = mock[RGBImage]
 
-    // Apply the convertor
     val result = controller.applyConvertor(rgbImage, imageConverter)
 
     assert(result === None)

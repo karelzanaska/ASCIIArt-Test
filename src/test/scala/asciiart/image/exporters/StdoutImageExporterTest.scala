@@ -1,5 +1,6 @@
 package asciiart.image.exporters
 
+import asciiart.StandardTestsGroup
 import asciiart.image.models.grid.PixelGrid
 import asciiart.image.models.image.AsciiImage
 import asciiart.image.models.pixel.AsciiPixel
@@ -7,7 +8,7 @@ import org.scalatest.FunSuite
 
 class StdoutImageExporterTest extends FunSuite {
 
-  test("exportImage should correctly export image to stdout") {
+  test("exportImage should correctly export image to stdout", StandardTestsGroup) {
     val pixelGrid = PixelGrid[AsciiPixel](2, 2)
     pixelGrid.setPixel(0, 0, AsciiPixel('a'))
     pixelGrid.setPixel(0, 1, AsciiPixel('b'))

@@ -1,12 +1,13 @@
 package asciiart.image.models.image
 
+import asciiart.StandardTestsGroup
 import asciiart.image.models.grid.PixelGrid
 import asciiart.image.models.pixel.AsciiPixel
 import org.scalatest.FunSuite
 
 class AsciiImageTest extends FunSuite {
 
-  test("AsciiImage should have correct width and height") {
+  test("AsciiImage should have correct width and height", StandardTestsGroup) {
     val pixelGrid = PixelGrid[AsciiPixel](2, 2)
     pixelGrid.setPixel(0, 0, AsciiPixel('a'))
     pixelGrid.setPixel(0, 1, AsciiPixel('b'))
@@ -18,7 +19,7 @@ class AsciiImageTest extends FunSuite {
     assert(image.height == 2)
   }
 
-  test("AsciiImage should return correct pixel") {
+  test("AsciiImage should return correct pixel", StandardTestsGroup) {
     val pixelGrid = PixelGrid[AsciiPixel](2, 2)
     pixelGrid.setPixel(0, 0, AsciiPixel('a'))
     pixelGrid.setPixel(0, 1, AsciiPixel('b'))
@@ -33,7 +34,7 @@ class AsciiImageTest extends FunSuite {
     assert(image.getPixel(1, 1) == AsciiPixel('d'))
   }
 
-  test("AsciiImage should return correct string") {
+  test("AsciiImage should return correct string", StandardTestsGroup) {
     val pixelGrid = PixelGrid[AsciiPixel](2, 2)
     pixelGrid.setPixel(0, 0, AsciiPixel('a'))
     pixelGrid.setPixel(0, 1, AsciiPixel('b'))

@@ -1,11 +1,12 @@
 package asciiart.image.convertors.pixel
 
+import asciiart.StandardTestsGroup
 import asciiart.image.models.pixel.RGBPixel
 import org.scalatest.FunSuite
 
 class PaulBourkeGrayscaleToAsciiPixelConvertorTest extends FunSuite {
 
-  test("convert should correctly convert RGBPixel to AsciiPixel") {
+  test("convert should correctly convert RGBPixel to AsciiPixel", StandardTestsGroup) {
     val pixel = RGBPixel(255, 255, 255)
     val result = PaulBourkeGrayscaleToAsciiPixelConvertor().convert(pixel)
 

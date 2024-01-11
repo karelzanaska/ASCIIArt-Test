@@ -1,5 +1,6 @@
 package asciiart.image.exporters
 
+import asciiart.StandardTestsGroup
 import asciiart.image.models.grid.PixelGrid
 import asciiart.image.models.image.AsciiImage
 import asciiart.image.models.pixel.AsciiPixel
@@ -9,17 +10,17 @@ import java.io.File
 
 class TxtImageExporterTest extends FunSuite {
 
-  test("validateFileExtension should return true when file is txt type") {
+  test("validateFileExtension should return true when file is txt type", StandardTestsGroup) {
     val exporter = TxtImageExporter("test.txt")
     assert(exporter.validateFileExtension("test.txt"))
   }
 
-  test("validateFileExtension should return false when file is not txt type") {
+  test("validateFileExtension should return false when file is not txt type", StandardTestsGroup) {
     val exporter = TxtImageExporter("test.txt")
     assert(!exporter.validateFileExtension("test.jpg"))
   }
 
-  test("exportImage should correctly create txt file") {
+  test("exportImage should correctly create txt file", StandardTestsGroup) {
     val pixelGrid = PixelGrid[AsciiPixel](2, 2)
     pixelGrid.setPixel(0, 0, AsciiPixel('a'))
     pixelGrid.setPixel(0, 1, AsciiPixel('b'))

@@ -1,5 +1,6 @@
 package asciiart.image.filters.rotate
 
+import asciiart.StandardTestsGroup
 import asciiart.image.models.grid.PixelGrid
 import asciiart.image.models.image.RGBImage
 import asciiart.image.models.pixel.RGBPixel
@@ -7,7 +8,7 @@ import org.scalatest.FunSuite
 
 class RotateImageFilterTest extends FunSuite {
 
-  test("RotateImageFilter should return error when degrees is not multiple of 90") {
+  test("RotateImageFilter should return error when degrees is not multiple of 90", StandardTestsGroup) {
     val pixelGrid = new PixelGrid[RGBPixel](2, 2)
     pixelGrid.setPixel(0, 0, RGBPixel(1, 2, 3))
     pixelGrid.setPixel(0, 1, RGBPixel(4, 5, 6))
@@ -20,7 +21,7 @@ class RotateImageFilterTest extends FunSuite {
     assert(result.isLeft)
   }
 
-  test("RotateImageFilter should return original image when degrees is 0") {
+  test("RotateImageFilter should return original image when degrees is 0", StandardTestsGroup) {
     val pixelGrid = new PixelGrid[RGBPixel](2, 2)
     pixelGrid.setPixel(0, 0, RGBPixel(1, 2, 3))
     pixelGrid.setPixel(0, 1, RGBPixel(4, 5, 6))
@@ -36,7 +37,7 @@ class RotateImageFilterTest extends FunSuite {
     assert(newImage === image)
   }
 
-  test("RotateImageFilter should return image rotated by 90 degrees when degrees is 90") {
+  test("RotateImageFilter should return image rotated by 90 degrees when degrees is 90", StandardTestsGroup) {
     val pixelGrid = new PixelGrid[RGBPixel](3, 2)
     pixelGrid.setPixel(0, 0, RGBPixel(1, 2, 3))
     pixelGrid.setPixel(0, 1, RGBPixel(4, 5, 6))
@@ -76,7 +77,7 @@ class RotateImageFilterTest extends FunSuite {
     assert(newImage4 === rotatedImage)
   }
 
-  test("RotateImageFilter should return image rotated by 180 degrees when degrees is 180") {
+  test("RotateImageFilter should return image rotated by 180 degrees when degrees is 180", StandardTestsGroup) {
     val pixelGrid = new PixelGrid[RGBPixel](3, 2)
     pixelGrid.setPixel(0, 0, RGBPixel(1, 2, 3))
     pixelGrid.setPixel(0, 1, RGBPixel(4, 5, 6))
@@ -111,7 +112,7 @@ class RotateImageFilterTest extends FunSuite {
     assert(newImage3 === rotatedImage)
   }
 
-  test("RotateImageFilter should return Right with an image rotated by 270 degrees when degrees is 270") {
+  test("RotateImageFilter should return Right with an image rotated by 270 degrees when degrees is 270", StandardTestsGroup) {
 
     val pixelGrid = new PixelGrid[RGBPixel](3, 2)
     pixelGrid.setPixel(0, 0, RGBPixel(1, 2, 3))

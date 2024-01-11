@@ -1,12 +1,13 @@
 package asciiart.image.models.image
 
+import asciiart.StandardTestsGroup
 import asciiart.image.models.grid.PixelGrid
 import asciiart.image.models.pixel.RGBPixel
-import org.scalatest.FunSuite
+import org.scalatest.{FunSuite, ScalaTestVersion}
 
 class RGBImageTest extends FunSuite {
 
-  test("RGBImage should have correct width and height") {
+  test("RGBImage should have correct width and height", StandardTestsGroup) {
     val pixelGrid = PixelGrid[RGBPixel](2, 2)
     pixelGrid.setPixel(0, 0, RGBPixel(0, 0, 0))
     pixelGrid.setPixel(0, 1, RGBPixel(255, 255, 255))
@@ -19,7 +20,7 @@ class RGBImageTest extends FunSuite {
     assert(image.height == 2)
   }
 
-  test("RGBImage should return correct pixel") {
+  test("RGBImage should return correct pixel", StandardTestsGroup) {
     val pixelGrid = PixelGrid[RGBPixel](2, 2)
     pixelGrid.setPixel(0, 0, RGBPixel(0, 0, 0))
     pixelGrid.setPixel(0, 1, RGBPixel(255, 255, 255))

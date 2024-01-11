@@ -1,12 +1,14 @@
 package asciiart.image.filters.invert
 
+import asciiart.StandardTestsGroup
 import asciiart.image.models.grid.PixelGrid
 import asciiart.image.models.image.RGBImage
 import asciiart.image.models.pixel.RGBPixel
 import org.scalatest.FunSuite
 
 class InvertImageFilterTest extends FunSuite {
-  test("InvertFilter with image with all white pixels should produce image with all black pixels") {
+
+  test("InvertFilter with image with all white pixels should produce image with all black pixels", StandardTestsGroup) {
     val pixelGrid = new PixelGrid[RGBPixel](2, 2)
     pixelGrid.setPixel(0, 0, RGBPixel(255, 255, 255))
     pixelGrid.setPixel(0, 1, RGBPixel(255, 255, 255))
@@ -29,7 +31,7 @@ class InvertImageFilterTest extends FunSuite {
     }
   }
 
-  test("InvertFilter with image with all black pixels should produce image with all white pixels") {
+  test("InvertFilter with image with all black pixels should produce image with all white pixels", StandardTestsGroup) {
     val pixelGrid = new PixelGrid[RGBPixel](2, 2)
     pixelGrid.setPixel(0, 0, RGBPixel(0, 0, 0))
     pixelGrid.setPixel(0, 1, RGBPixel(0, 0, 0))
@@ -52,7 +54,7 @@ class InvertImageFilterTest extends FunSuite {
     }
   }
 
-  test("InvertFilter with image with white and black pixels should produce image with opposite white and black pixels") {
+  test("InvertFilter with image with white and black pixels should produce image with opposite white and black pixels", StandardTestsGroup) {
     val pixelGrid = new PixelGrid[RGBPixel](2, 2)
     pixelGrid.setPixel(0, 0, RGBPixel(0, 0, 0))
     pixelGrid.setPixel(0, 1, RGBPixel(255, 255, 255))
